@@ -1,28 +1,33 @@
-import { createClientServer } from "@/utils/supabase/server";
+"use client";
+import { useEffect, useState } from "react";
 
-const getDatas = async () => {
-  const supabase = createClientServer();
+import { getReservations } from "@/utils/auth/action";
 
-  const { data } = await supabase.from("reservations").select("*");
-  return data;
-};
-const getUser = async () => {
-  const supabase = createClientServer();
+export default function Home() {
+  const [reservations, setReservations] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getReservations();
+      console.log("Data fetched in component:", data);
+      setReservations(data);
+    }
+    fetchData();
+  }, []);
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  return user;
-};
-
-export default async function Home() {
-  const classes = await getDatas();
-  const user = await getUser();
-  // console.log("user", user);
-  console.log("result", classes);
+  useEffect(() => {
+    console.log("result", reservations);
+  }, [reservations]);
+  console.log("Current reservations state:", reservations);
   return (
-    <main className="flex min-h-screen flex-col item-center justify-between p-24">
+    <main className="flex min-h-screen flex-col item-center p-24">
       <h1>mes reservation</h1>
+      <ul>
+        {reservations.map((reservation) => (
+          <li key={reservation.id}>
+            {reservation.id} - {reservation.created_at}
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }
