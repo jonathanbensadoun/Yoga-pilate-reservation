@@ -27,9 +27,7 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  // IMPORTANT: Avoid writing any logic between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
+
 
   const {
     data: { user },
@@ -37,7 +35,7 @@ export async function updateSession(request: NextRequest) {
 
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith('/auth')
+    !request.nextUrl.pathname.startsWith('/auth') 
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()
