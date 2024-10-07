@@ -8,6 +8,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function AuthPage() {
   const [isPending, startTransition] = useTransition();
@@ -42,8 +43,15 @@ export default function AuthPage() {
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      <h2>{!signup ? "Connexion" : "Inscription"}</h2>
-      <form action={handleSubmit} className="w-full md:w2/3 lg:w-1/2">
+      <Image
+        src="/img/Logo_Laure_S.jpg"
+        width={300}
+        height={150}
+        className="rounded-full mb-8"
+        alt="Logo de Laure Sautier c'est des mains qui entoure le buste d'une personne représente la proffession de Ostéopathe"
+      />
+      <h2 className="text-2xl">{!signup ? "Connexion" : "Inscription"}</h2>
+      <form action={handleSubmit} className="w-full md:w2/3 lg:w-1/3 p-4">
         <fieldset
           className="grid drif-cols-1 w-full gap-4"
           disabled={isPending}

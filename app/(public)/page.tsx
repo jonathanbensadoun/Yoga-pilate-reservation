@@ -148,8 +148,8 @@ export default function Home() {
             >
               <div className="flex flex-col justify-center items-stretch gap-2 ">
                 <h3 className="text-xl font-bold">{classe.title}</h3>
-                <p>description: {classe.description}</p>
-                <p>Durée: {classe.duration} heures</p>
+                {classe.description && <p>description: {classe.description}</p>}
+                <p>Durée: {classe.duration} minutes</p>
                 <p>
                   Date:{" "}
                   {new Date(classe.class_date || "").toLocaleDateString(
@@ -215,7 +215,7 @@ export default function Home() {
                 <Input type="text" id="description" name="description" />
               </div>
               <div>
-                <label htmlFor="duration">Durée (heures)</label>
+                <label htmlFor="duration">Durée (minutes)</label>
                 <Input type="number" id="duration" name="duration" required />
               </div>
               <div>
@@ -286,7 +286,9 @@ export default function Home() {
 
         {profil && !profil.admin && (
           <div>
-            <h2 className="text-2xl font-bold ">mes reservation</h2>
+            {reservations.length > 0 && (
+              <h2 className="text-2xl font-bold ">mes reservation</h2>
+            )}
             <ul>
               {reservations.map((reservation) => (
                 <li key={reservation.id} className="border mt-2">
