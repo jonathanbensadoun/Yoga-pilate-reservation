@@ -14,7 +14,7 @@ export default function AuthPage() {
   const [error, setError] = useState<string | null>(null);
   const query = useSearchParams().get("query");
 
-  const signin = query === "signin";
+  const signup = query === "signup";
 
   const handleSignIn = (formData: FormData) => {
     startTransition(() => {
@@ -33,16 +33,16 @@ export default function AuthPage() {
   };
 
   const handleSubmit = (formData: FormData) => {
-    if (signin) {
-      handleSignIn(formData);
-    } else {
+    if (signup) {
       handleSignUp(formData);
+    } else {
+      handleSignIn(formData);
     }
   };
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      <h2>{signin ? "Connexion" : "Inscription"}</h2>
+      <h2>{!signup ? "Connexion" : "Inscription"}</h2>
       <form action={handleSubmit} className="w-full md:w2/3 lg:w-1/2">
         <fieldset
           className="grid drif-cols-1 w-full gap-4"
@@ -57,7 +57,7 @@ export default function AuthPage() {
           />
           {error && <p className="text-red-500">{error}</p>}
           <Button className="flex gap-2">
-            {signin ? "Se connecter" : "S'inscrire"}
+            {!signup ? "Se connecter" : "S'inscrire"}
             <AiOutlineLoading3Quarters
               className={cn("animate-spin", { hidden: !isPending })}
             />
@@ -65,10 +65,10 @@ export default function AuthPage() {
         </fieldset>
       </form>
       <Link
-        href={signin ? "/auth?query=signup" : "/auth?query=signin"}
+        href={signup ? "/auth?query=signin" : "/auth?query=signup"}
         className="mt-6 hover:underline"
       >
-        {signin ? "Pas encore de compte ?" : "Déjà un compte ?"}
+        {!signup ? "Pas encore de compte ?" : "Déjà un compte ?"}
       </Link>
     </div>
   );

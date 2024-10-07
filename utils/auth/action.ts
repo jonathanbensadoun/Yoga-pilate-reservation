@@ -65,3 +65,28 @@ export const getProfile = async () => {
     }
     return data;
 }
+
+export const createClass = async (formData: FormData) => {
+    const supabase = createClientServer();
+    const { error } = await supabase.from("classes").insert([
+        {
+            title: formData.get("title") as string | null,
+            description: formData.get("description") as string | null,
+            duration: formData.get("duration") ? parseInt(formData.get("duration") as string, 10) : null,
+            available_slots: formData.get("available_slots") ? parseInt(formData.get("available_slots") as string, 10) : null,
+            class_date: formData.get("class_date") ? new Date(formData.get("class_date") as string).toISOString() : null
+           
+        },
+    ]);
+    if (error) {
+        console.error("Error creating class:", error);
+    }
+}
+
+export const deleteClass = async (id: string) => {
+    const supabase = createClientServer();
+    const { error } = await supabase.from("classes").delete().match({ id });
+    if (error) {
+        console.error("Error deleting class:", error);
+    }
+}

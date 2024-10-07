@@ -17,6 +17,7 @@ function Calendar({
 }: CalendarProps) {
   return (
     <DayPicker
+      timezone="Europe/Paris"
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
