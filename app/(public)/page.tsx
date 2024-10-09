@@ -9,6 +9,7 @@ import {
   getClasses,
   getProfile,
   getReservations,
+  addReservation,
 } from "@/utils/auth/action";
 import {
   Popover,
@@ -106,6 +107,21 @@ export default function Home() {
     setReload(true);
   };
 
+  const handleReservation = async (classId: string, userId: string) => {
+    startTransition(() => {
+      addReservation(classId, userId)
+        .then(() => {
+          setMessageAlert("Le cours a été réserver avec succès.");
+          setSuccessAddClass(true);
+        })
+        .catch(() => {
+          setMessageAlert("Une erreur est survenue, veuillez réessayer");
+          setErrorAddClass(true);
+        });
+    });
+    setReload(true);
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setSuccessAddClass(false);
@@ -114,8 +130,8 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [successAddClass, errorAddClass]);
   useEffect(() => {
-    console.log(classes);
-  }, [classes]);
+    console.log("profil", profil);
+  }, [profil]);
 
   return (
     <main className="flex min-h-screen flex-col  item-center p-24 text-center">
@@ -166,6 +182,11 @@ export default function Home() {
                 </p>
 
                 <Button
+                  onClick={() => {
+                    if (profil) {
+                      handleReservation(classe.id, profil.id);
+                    }
+                  }}
                   className={` ${
                     classe.available_slots === 0
                       ? "bg-gray-500 "

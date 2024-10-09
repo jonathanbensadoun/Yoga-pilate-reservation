@@ -90,3 +90,17 @@ export const deleteClass = async (id: string) => {
         console.error("Error deleting class:", error);
     }
 }
+
+export const addReservation = async (classId: string, userId:string ) => {
+    const supabase = createClientServer();
+    console.log(classId,userId);
+    const {error} = await supabase
+    .from("reservations")
+    .insert([{
+       user_id:userId,
+       classes_id:classId 
+    }]);
+    if (error) {
+        console.error("Error creating reservation:", error);
+    }
+}
