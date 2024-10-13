@@ -48,7 +48,7 @@ export const getReservations = async () => {
 
 export const getClasses = async () => {
     const supabase = createClientServer();
-    const { data, error } = await supabase.from("classes").select("*");
+    const { data, error } = await supabase.from("classes").select("*").lte("class_date", new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()).order("class_date", { ascending: true });
     if (error) {
         console.error("Error fetching classes:", error);
         return [];
@@ -104,6 +104,15 @@ export const addReservation = async (classId: string, userId:string ) => {
     }]);
     if (error) {
         console.error("Error creating reservation:", error);
+        throw error;
+    }
+}
+
+export const deleteReservation = async (id: string) => {
+    const supabase = createClientServer();
+    const { error } = await supabase.from("reservations").delete().match({ id });
+    if (error) {
+        console.error("Error deleting reservation:", error);
         throw error;
     }
 }

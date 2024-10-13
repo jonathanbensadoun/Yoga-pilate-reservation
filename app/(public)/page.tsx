@@ -21,6 +21,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { createClass } from "@/utils/auth/action";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Reservations from "@/components/Reservations";
+import Image from "next/image";
 
 interface Reservation {
   classes_id: string | null;
@@ -55,11 +57,11 @@ export default function Home() {
     new Date()
   );
   const [isPending, startTransition] = useTransition();
-  const [reload, setReload] = useState(false);
-  const [successAddClass, setSuccessAddClass] = useState(false);
-  const [errorAddClass, setErrorAddClass] = useState(false);
-  const [messageAlert, setMessageAlert] = useState("");
-  const [addClass, setAddClass] = useState(false);
+  const [reload, setReload] = useState<boolean>(false);
+  const [successAddClass, setSuccessAddClass] = useState<boolean>(false);
+  const [errorAddClass, setErrorAddClass] = useState<boolean>(false);
+  const [messageAlert, setMessageAlert] = useState<string>("");
+  const [addClass, setAddClass] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -162,7 +164,13 @@ export default function Home() {
               key={classe.id}
               className="border rounded-md p-2 my-2 flex flex-col md:flex-row justify-around items-center gap-4 lg:w-1/3"
             >
-              <div className="flex flex-col justify-center items-stretch gap-2 ">
+              <div className="flex flex-col justify-center items-center gap-2 ">
+                <Image
+                  src="/img/Pilate.png"
+                  alt="sale de pilate"
+                  width={80}
+                  height={80}
+                />
                 <h3 className="text-xl font-bold">{classe.title}</h3>
                 {classe.description && <p>description: {classe.description}</p>}
                 <p>Durée: {classe.duration} minutes</p>
@@ -187,11 +195,12 @@ export default function Home() {
                       handleReservation(classe.id, profil.id);
                     }
                   }}
-                  className={` ${
+                  className={`${
                     classe.available_slots === 0
-                      ? "bg-gray-500 "
+                      ? "bg-gray-500"
                       : "bg-green-500"
                   }`}
+                  disabled={classe.available_slots === 0}
                 >
                   {classe.available_slots === 0
                     ? "Complet"
@@ -306,18 +315,16 @@ export default function Home() {
         )}
 
         {profil && !profil.admin && (
-          <div>
-            {reservations.length > 0 && (
-              <h2 className="text-2xl font-bold ">mes reservation</h2>
-            )}
-            <ul>
-              {reservations.map((reservation) => (
-                <li key={reservation.id} className="border mt-2">
-                  {reservation.id} - {reservation.created_at} - classes_id:{" "}
-                  {reservation.classes_id} - user_id: {reservation.user_id}
-                </li>
-              ))}
-            </ul>
+          <div className="lg:w-1/3">
+            <Reservations
+              reservations={reservations}
+              classes={classes}
+              startTransition={startTransition}
+              setMessageAlert={setMessageAlert}
+              setSuccessAddClass={setSuccessAddClass}
+              setErrorAddClass={setErrorAddClass}
+              setReload={setReload}
+            />
           </div>
         )}
       </div>
