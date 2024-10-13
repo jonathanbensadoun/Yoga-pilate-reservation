@@ -211,6 +211,17 @@ export default function Home() {
                       disabled={
                         classe.available_slots === 0 || profil?.admin === true
                       }
+                      title="Réserver ce cours"
+                      onMouseEnter={(e) => {
+                        if (classe.available_slots !== 0 && !profil?.admin) {
+                          e.currentTarget.textContent = "Réserver ce cours";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (classe.available_slots !== 0 && !profil?.admin) {
+                          e.currentTarget.textContent = `${classe.available_slots} places disponibles`;
+                        }
+                      }}
                     >
                       {classe.available_slots === 0
                         ? "Complet"
