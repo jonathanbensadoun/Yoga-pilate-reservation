@@ -80,6 +80,7 @@ export const createClass = async (formData: FormData) => {
     ]);
     if (error) {
         console.error("Error creating class:", error);
+        throw error;
     }
 }
 
@@ -88,13 +89,13 @@ export const deleteClass = async (id: string) => {
     const { error } = await supabase.from("classes").delete().match({ id });
     if (error) {
         console.error("Error deleting class:", error);
+        throw error;
     }
 }
 
 export const addReservation = async (classId: string, userId:string ) => {
     const supabase = createClientServer();
-    console.log(classId,userId);
-    console.log(typeof classId,typeof userId);
+   
     const {error} = await supabase
     .from("reservations")
     .insert([{
@@ -103,5 +104,6 @@ export const addReservation = async (classId: string, userId:string ) => {
     }]);
     if (error) {
         console.error("Error creating reservation:", error);
+        throw error;
     }
 }
