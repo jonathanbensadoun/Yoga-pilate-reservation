@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { signOut } from "@/utils/auth/action";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isPending, startTransition] = useTransition();
@@ -14,7 +15,10 @@ export default function Navbar() {
     });
   };
   return (
-    <div className="flex justify-end p-4">
+    <div className="flex justify-between items-center px-8 p-4 fixed w-screen bg-gray-100">
+      <div>
+        <h2 className="text-2xl">Réservation des cours de pilate</h2>
+      </div>
       <form>
         <Button
           formAction={handleSignOut}

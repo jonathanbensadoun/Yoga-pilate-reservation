@@ -23,6 +23,17 @@ import { createClass } from "@/utils/auth/action";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Reservations from "@/components/Reservations";
 import Image from "next/image";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface Reservation {
   classes_id: string | null;
@@ -189,32 +200,75 @@ export default function Home() {
                   )}
                 </p>
 
-                <Button
-                  onClick={() => {
-                    if (profil) {
-                      handleReservation(classe.id, profil.id);
-                    }
-                  }}
-                  className={`${
-                    classe.available_slots === 0
-                      ? "bg-gray-500"
-                      : "bg-green-500"
-                  }`}
-                  disabled={classe.available_slots === 0}
-                >
-                  {classe.available_slots === 0
-                    ? "Complet"
-                    : `${classe.available_slots} places disponibles`}
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      className={`${
+                        classe.available_slots === 0
+                          ? "bg-gray-500"
+                          : "bg-green-500"
+                      }`}
+                      disabled={
+                        classe.available_slots === 0 || profil?.admin === true
+                      }
+                    >
+                      {classe.available_slots === 0
+                        ? "Complet"
+                        : `${classe.available_slots} places disponibles`}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Confirmer la réservation
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Êtes-vous sûr de vouloir réserver ce cours ?
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Annuler</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => {
+                          if (profil) {
+                            handleReservation(classe.id, profil.id);
+                          }
+                        }}
+                      >
+                        Réserver
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
 
               {profil && profil.admin && (
-                <Button
-                  onClick={() => handleDelete(classe.id)}
-                  className="bg-red-500"
-                >
-                  <FaTrash />
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className="bg-red-500">
+                      <FaTrash />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Confirmer la suppression
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Êtes-vous sûr de vouloir supprimer ce cours ? Cette
+                        action est irréversible.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Annuler</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleDelete(classe.id)}
+                      >
+                        Supprimer
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               )}
             </li>
           ))}

@@ -3,6 +3,17 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import { deleteReservation } from "../utils/auth/action";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 interface Reservation {
   classes_id: string | null;
   created_at: string;
@@ -93,14 +104,35 @@ const Reservations: React.FC<ReservationsProps> = ({
                 {new Date(reservedClass?.class_date || "").getTime() -
                   new Date().getTime() >
                 48 * 60 * 60 * 1000 ? (
-                  <Button
-                    className="bg-red-500 text-white px-4 py-2 rounded-md"
-                    onClick={() => {
-                      handleDeleteReservation(reservation.id);
-                    }}
-                  >
-                    Annuler
-                  </Button>
+                  <>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button className="bg-red-500 text-white px-4 py-2 rounded-md">
+                          Annuler
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Confirmer l&apos;annulation
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Êtes-vous sûr de vouloir annuler cette réservation?
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Annuler</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => {
+                              handleDeleteReservation(reservation.id);
+                            }}
+                          >
+                            Supprimer la réservation
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </>
                 ) : (
                   <p className="text-red-500">
                     Vous ne pouvez plus annuler cette réservation.
