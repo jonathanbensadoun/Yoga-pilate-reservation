@@ -90,20 +90,22 @@ const Reservations: React.FC<ReservationsProps> = ({
                     })}
                   </p>
                 </div>
-                <Button
-                  className="bg-red-500 text-white px-4 py-2 rounded-md"
-                  onClick={() => {
-                    console.log(
-                      "delete reservation",
-                      reservation.id,
-                      "type",
-                      typeof reservation.id
-                    );
-                    handleDeleteReservation(reservation.id);
-                  }}
-                >
-                  Annuler
-                </Button>
+                {new Date(reservedClass?.class_date || "").getTime() -
+                  new Date().getTime() >
+                48 * 60 * 60 * 1000 ? (
+                  <Button
+                    className="bg-red-500 text-white px-4 py-2 rounded-md"
+                    onClick={() => {
+                      handleDeleteReservation(reservation.id);
+                    }}
+                  >
+                    Annuler
+                  </Button>
+                ) : (
+                  <p className="text-red-500">
+                    Vous ne pouvez plus annuler cette réservation.
+                  </p>
+                )}
               </div>
             </li>
           );
