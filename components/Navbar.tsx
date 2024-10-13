@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import { signOut } from "@/utils/auth/action";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 export default function Navbar() {
   const [isPending, startTransition] = useTransition();
