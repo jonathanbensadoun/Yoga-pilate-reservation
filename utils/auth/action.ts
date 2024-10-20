@@ -26,6 +26,13 @@ export const signUpWithPassword = async (data: FormData) => {
     const { error } = await supabase.auth.signUp({
         email: data.get('email') as string,
         password: data.get('password') as string,
+        options: {
+            data: {
+                first_name: data.get('first_name') as string,
+                last_name: data.get('last_name') as string,
+                phone: data.get('phone') as string,
+            }
+        }
     })
     if (error) {
        throw error

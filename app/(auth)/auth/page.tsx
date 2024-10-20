@@ -63,6 +63,28 @@ export default function AuthPage() {
             placeholder="Mot de passe"
             required
           />
+          {signup && (
+            <>
+              <Input
+                type="first_name"
+                name="first_name"
+                placeholder="Prénom"
+                required
+              />
+              <Input
+                type="last_name"
+                name="last_name"
+                placeholder="Nom"
+                required
+              />
+              <Input
+                type="phone"
+                name="phone"
+                placeholder="Téléphone"
+                required
+              />
+            </>
+          )}
           {error && <p className="text-red-500">{error}</p>}
           <Button className="flex gap-2">
             {!signup ? "Se connecter" : "S'inscrire"}
