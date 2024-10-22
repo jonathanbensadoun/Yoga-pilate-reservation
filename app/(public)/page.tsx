@@ -1,6 +1,6 @@
 "use client";
+
 import { useEffect, useState, useTransition } from "react";
-import { FaTrash } from "react-icons/fa";
 
 import { MdAddCircle } from "react-icons/md";
 
@@ -11,22 +11,12 @@ import {
   getReservations,
   addReservation,
 } from "@/utils/auth/action";
-import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Reservations from "@/components/Reservations";
-import Image from "next/image";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+
 import FormAddClasses from "@/components/FormAddClasses";
+import DeleteClasses from "@/components/DeleteClasses";
+import CardClasses from "@/components/CardClasses";
 
 interface Reservation {
   classes_id: string | null;
@@ -151,111 +141,14 @@ export default function Home() {
               key={classe.id}
               className="border rounded-md p-2 my-2 flex flex-col md:flex-row justify-around items-center gap-4 lg:w-1/3"
             >
-              <div className="flex flex-col justify-center items-center gap-2 ">
-                <Image
-                  src="/img/Pilate.png"
-                  alt="sale de pilate"
-                  width={80}
-                  height={80}
-                />
-                <h3 className="text-xl font-bold">{classe.title}</h3>
-                {classe.description && <p>description: {classe.description}</p>}
-                <p>Durée: {classe.duration} minutes</p>
-                <p>
-                  Date:{" "}
-                  {new Date(classe.class_date || "").toLocaleDateString(
-                    "fr-FR",
-                    {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    }
-                  )}
-                </p>
-
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      className={`${
-                        classe.available_slots === 0
-                          ? "bg-gray-500"
-                          : "bg-green-500"
-                      }`}
-                      disabled={
-                        classe.available_slots === 0 || profil?.admin === true
-                      }
-                      title="Réserver ce cours"
-                      onMouseEnter={(e) => {
-                        if (classe.available_slots !== 0 && !profil?.admin) {
-                          e.currentTarget.textContent = "Réserver ce cours";
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (classe.available_slots !== 0 && !profil?.admin) {
-                          e.currentTarget.textContent = `${classe.available_slots} places disponibles`;
-                        }
-                      }}
-                    >
-                      {classe.available_slots === 0
-                        ? "Complet"
-                        : `${classe.available_slots} places disponibles`}
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Confirmer la réservation
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Êtes-vous sûr de vouloir réserver ce cours ?
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Annuler</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => {
-                          if (profil) {
-                            handleReservation(classe.id, profil.id);
-                          }
-                        }}
-                      >
-                        Réserver
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
+              <CardClasses
+                classe={classe}
+                handleReservation={handleReservation}
+                profil={profil!}
+              />
 
               {profil && profil.admin && (
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button className="bg-red-500">
-                      <FaTrash />
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Confirmer la suppression
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Êtes-vous sûr de vouloir supprimer ce cours ? Cette
-                        action est irréversible.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Annuler</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => handleDelete(classe.id)}
-                      >
-                        Supprimer
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                <DeleteClasses handleDelete={handleDelete} classe={classe} />
               )}
             </li>
           ))}
