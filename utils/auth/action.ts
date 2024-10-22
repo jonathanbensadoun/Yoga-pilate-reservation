@@ -35,7 +35,7 @@ export const signUpWithPassword = async (data: FormData) => {
         }
     })
     if (error) {
-       throw error
+               throw error
     }
     redirect("/")
 }

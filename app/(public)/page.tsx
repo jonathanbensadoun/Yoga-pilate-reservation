@@ -11,15 +11,7 @@ import {
   getReservations,
   addReservation,
 } from "@/utils/auth/action";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
-import { createClass } from "@/utils/auth/action";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Reservations from "@/components/Reservations";
 import Image from "next/image";
@@ -34,6 +26,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import FormAddClasses from "@/components/FormAddClasses";
 
 interface Reservation {
   classes_id: string | null;
@@ -87,23 +80,6 @@ export default function Home() {
 
     fetchData();
   }, [reload]);
-
-  const handleSubmit = async (formData: FormData) => {
-    startTransition(() => {
-      formData.set("class_date", selectedDate?.toISOString() || "");
-      createClass(formData)
-        .then(() => {
-          setMessageAlert("Le cours a été ajouté avec succès.");
-          setSuccessAddClass(true);
-        })
-        .catch(() => {
-          setMessageAlert("Une erreur est survenue, veuillez réessayer");
-          setErrorAddClass(true);
-        });
-    });
-    setAddClass(false);
-    setReload(true);
-  };
 
   const handleDelete = async (id: string) => {
     startTransition(() => {
@@ -295,88 +271,17 @@ export default function Home() {
           />
         )}
         {addClass && profil && profil.admin && (
-          <form action={handleSubmit} className="w-full md:w2/3 lg:w-1/3">
-            <fieldset
-              className="grid drif-cols-1 w-full gap-4"
-              disabled={isPending}
-            >
-              <h2 className="text-2xl font-bold ">Ajouter un cours</h2>
-              <div>
-                <label htmlFor="title">Titre</label>
-                <Input type="text" id="title" name="title" required />
-              </div>
-              <div>
-                <label htmlFor="description">Description</label>
-                <Input type="text" id="description" name="description" />
-              </div>
-              <div>
-                <label htmlFor="duration">Durée (minutes)</label>
-                <Input type="number" id="duration" name="duration" required />
-              </div>
-              <div>
-                <label htmlFor="available_slots">Places disponibles</label>
-                <Input
-                  type="number"
-                  id="available_slots"
-                  name="available_slots"
-                  required
-                />
-              </div>
-              <div className=" flex flex-col justify-center items-center gap-4  ">
-                {selectedDate && (
-                  <p className="text-xl font-bold ">
-                    {selectedDate.toLocaleDateString("fr-FR")}{" "}
-                    {selectedDate.toLocaleTimeString("fr-FR", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                )}
-                <div>
-                  <label htmlFor="class_date" className="mr-4">
-                    Date et heure
-                  </label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button>Selection de la date et de l&apos;heure</Button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <Calendar
-                        mode="single"
-                        selected={selectedDate}
-                        onSelect={setSelectedDate}
-                      />
-                      <Input
-                        type="time"
-                        id="class_time"
-                        name="class_time"
-                        onChange={(e) => {
-                          const timeParts = e.target.value.split(":");
-                          if (selectedDate) {
-                            const newDate = new Date(selectedDate);
-                            newDate.setHours(parseInt(timeParts[0], 10));
-                            newDate.setMinutes(parseInt(timeParts[1], 10));
-                            setSelectedDate(newDate);
-                          }
-                        }}
-                        required
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-              </div>
-
-              <Button type="submit" className="bg-green-300 text-green-800">
-                Ajouter le cours
-              </Button>
-              <Button
-                onClick={() => setAddClass(false)}
-                className="bg-orange-400"
-              >
-                Annuler
-              </Button>
-            </fieldset>
-          </form>
+          <FormAddClasses
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            setAddClass={setAddClass}
+            startTransition={startTransition}
+            setSuccessAddClass={setSuccessAddClass}
+            setErrorAddClass={setErrorAddClass}
+            setReload={setReload}
+            setMessageAlert={setMessageAlert}
+            isPending={isPending}
+          />
         )}
 
         {profil && !profil.admin && (
