@@ -17,6 +17,7 @@ import Reservations from "@/components/Reservations";
 import FormAddClasses from "@/components/FormAddClasses";
 import DeleteClasses from "@/components/DeleteClasses";
 import CardClasses from "@/components/CardClasses";
+import CalendarReservation from "@/components/CalendarReservation";
 
 interface Reservation {
   classes_id: string | null;
@@ -133,6 +134,7 @@ export default function Home() {
         </Alert>
       )}
 
+      <CalendarReservation />
       <h2 className="text-2xl font-bold ">Les cours actuels</h2>
       {classes.length >= 1 ? (
         <ul className="flex flex-col justify-center items-center my-4">
