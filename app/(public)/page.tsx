@@ -220,7 +220,7 @@ export default function Home() {
         {!addClass && profil && profil.admin && (
           <MdAddCircle
             onClick={() => setAddClass(true)}
-            className="w-12 h-12 hover:text-green-900 hover:h-14 hover:w-14 cursor-pointer"
+            className="w-12 h-12 hover:text-blue-200 hover:h-14 hover:w-14 cursor-pointer"
           />
         )}
         {addClass && profil && profil.admin && (
