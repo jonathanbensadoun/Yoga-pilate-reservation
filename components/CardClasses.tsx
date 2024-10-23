@@ -40,11 +40,11 @@ export default function CardClasses({
   return (
     <div className="flex flex-col justify-center items-center gap-2 ">
       <Image
-        className="rounded-md w-1/2 md:w-1/3 "
+        className="rounded-md w-1/2 md:w-1/3 h-auto "
         src="/img/Pilate.png"
         alt="sale de pilate"
-        width={776}
-        height={997}
+        width="776"
+        height="997"
       />
       <h3 className="text-xl font-bold">{classe.title}</h3>
       {classe.description && <p>Description: {classe.description}</p>}
