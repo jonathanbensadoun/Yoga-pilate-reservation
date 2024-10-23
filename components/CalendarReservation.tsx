@@ -1,31 +1,26 @@
 import { useEffect, useState } from "react";
 import { Calendar } from "./ui/calendar";
 
-interface Classes {
-  available_slots: number | null;
-  class_date: string | null;
-  created_at: string;
-  description: string | null;
-  duration: number | null;
-  id: string;
-  title: string | null;
-}
-
 interface ClasseDate {
   class_date: string | null;
 }
 
 interface CalendarReservationProps {
-  classes: Classes[];
   classesDate: ClasseDate[];
+  setSelectedDateForFetch: (date: Date) => void;
 }
 
 export default function CalendarReservation({
-  classes,
   classesDate,
+  setSelectedDateForFetch,
 }: CalendarReservationProps) {
   const [selected, setSelected] = useState<Date | undefined>(new Date());
 
+  useEffect(() => {
+    if (selected) {
+      setSelectedDateForFetch(selected);
+    }
+  }, [selected, setSelectedDateForFetch]);
   // Convertir `classesDate` en objets `Date`
   const bookedDays = classesDate
     .map((classe) => classe.class_date)

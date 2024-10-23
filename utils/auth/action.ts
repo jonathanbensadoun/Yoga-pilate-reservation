@@ -53,9 +53,20 @@ export const getReservations = async () => {
     return data;
 }
 
-export const getClasses = async () => {
+export const getClasses = async (selectedDateForFetch: Date) => {
     const supabase = createClientServer();
-    const { data, error } = await supabase.from("classes").select("*").order("class_date", { ascending: true });
+
+    // Obtenir la date de début et de fin pour la journée entière
+    const startOfDay = new Date(selectedDateForFetch.setHours(0, 0, 0, 0)).toISOString();
+    const endOfDay = new Date(selectedDateForFetch.setHours(23, 59, 59, 999)).toISOString();
+
+    const { data, error } = await supabase
+        .from("classes")
+        .select("*")
+        .gte("class_date", startOfDay)
+        .lte("class_date", endOfDay)
+        .order("class_date", { ascending: true });
+
     if (error) {
         console.error("Error fetching classes:", error);
         return [];
@@ -119,7 +130,7 @@ export const addReservation = async (classId: string, userId:string ) => {
        classes_id: classId,
     }]);
     if (error) {
-        console.error("Error creating reservation:", error);
+        
         throw error;
     }
 }
@@ -128,7 +139,7 @@ export const deleteReservation = async (id: string) => {
     const supabase = createClientServer();
     const { error } = await supabase.from("reservations").delete().match({ id });
     if (error) {
-        console.error("Error deleting reservation:", error);
+        
         throw error;
     }
 }

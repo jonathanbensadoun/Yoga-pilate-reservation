@@ -62,22 +62,36 @@ export default function Home() {
   const [messageAlert, setMessageAlert] = useState<string>("");
   const [addClass, setAddClass] = useState<boolean>(false);
   const [classesDate, setClassesDate] = useState<ClasseDate[]>([]);
+  const [selectedDateForFetch, setSelectedDateForFetch] = useState<Date>(
+    new Date()
+  );
 
   useEffect(() => {
     async function fetchData() {
       const dataReservations = await getReservations();
-      const dataClasses = await getClasses();
+      // const dataClasses = await getClasses(selectedDateForFetch);
       const dataProfile = await getProfile();
       const dataClassesDate = await getClassesDate();
       setClassesDate(dataClassesDate);
       setProfile(dataProfile[0]);
       setReservations(dataReservations);
-      setClasses(dataClasses);
+      // setClasses(dataClasses);
       setReload(false);
     }
 
     fetchData();
-  }, [reload]);
+  }, [reload, selectedDateForFetch]);
+
+  useEffect(() => {
+    console.log("selectedDateForFetch", selectedDateForFetch);
+    async function fetchClasses() {
+      const dataClasses = await getClasses(selectedDateForFetch);
+      console.log("dataClasses", dataClasses);
+      setClasses(dataClasses);
+    }
+
+    fetchClasses();
+  }, [selectedDateForFetch]);
 
   const handleDelete = async (id: string) => {
     startTransition(() => {
@@ -116,9 +130,6 @@ export default function Home() {
     }, 5000);
     return () => clearTimeout(timer);
   }, [successAddClass, errorAddClass]);
-  useEffect(() => {
-    console.log("profil", profil);
-  }, [profil]);
 
   return (
     <main className="flex min-h-screen flex-col  item-center p-24 text-center">
@@ -141,8 +152,11 @@ export default function Home() {
         </Alert>
       )}
 
-      <CalendarReservation classes={classes} classesDate={classesDate} />
-      <h2 className="text-2xl font-bold ">Les cours actuels</h2>
+      <CalendarReservation
+        classesDate={classesDate}
+        setSelectedDateForFetch={setSelectedDateForFetch}
+      />
+      <h2 className="text-2xl font-bold mt-4">Séance(s) du jour</h2>
       {classes.length >= 1 ? (
         <ul className="flex flex-col justify-center items-center my-4">
           {classes.map((classe) => (
