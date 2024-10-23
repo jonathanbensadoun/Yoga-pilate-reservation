@@ -45,7 +45,10 @@ export default function ListStudent({
                   (profile: AllProfile) => profile.id === reservation.user_id
                 );
                 return (
-                  <li key={reservation.id}>
+                  <li
+                    key={reservation.id}
+                    className="border p-2 m-1 rounded-md"
+                  >
                     {profile ? (
                       <>
                         <div>

@@ -192,7 +192,7 @@ export default function Home() {
           {classes.map((classe) => (
             <li
               key={classe.id}
-              className="border rounded-md p-2 my-2 flex flex-col md:flex-row justify-around items-center gap-4 lg:w-1/3"
+              className="border rounded-md p-2 my-2 flex flex-col justify-around items-center gap-4 lg:w-1/3"
             >
               <CardClasses
                 classe={classe}
