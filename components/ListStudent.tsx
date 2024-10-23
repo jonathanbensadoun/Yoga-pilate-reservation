@@ -52,13 +52,13 @@ export default function ListStudent({
                     {profile ? (
                       <>
                         <div>
-                          Name: {profile.first_name} {profile.last_name}
+                          {profile.first_name} {profile.last_name}
                         </div>
                         <div>Email: {profile.email}</div>
-                        <div>Phone: {profile.phone}</div>
+                        <div>Téléphone: {profile.phone}</div>
                       </>
                     ) : (
-                      <div>Profile not found</div>
+                      <div>Profil non trouver </div>
                     )}
                   </li>
                 );

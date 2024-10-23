@@ -14,11 +14,11 @@ export default function Navbar() {
     });
   };
   return (
-    <div className="flex justify-between items-center px-8 p-4 fixed w-screen bg-gray-100 z-50">
+    <div className="flex items-center justify-center px-8 p-4 fixed w-screen md:w-1/2 rounded-b-3xl bg-gray-50 z-40 shadow ">
       <div>
         <h2 className="text-2xl">Réservation des cours de pilate</h2>
       </div>
-      <form>
+      <form className="md:absolute md:right-10">
         <Button
           formAction={handleSignOut}
           disabled={isPending}

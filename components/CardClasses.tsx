@@ -40,13 +40,14 @@ export default function CardClasses({
   return (
     <div className="flex flex-col justify-center items-center gap-2 ">
       <Image
+        className="rounded-md"
         src="/img/Pilate.png"
         alt="sale de pilate"
         width={80}
         height={80}
       />
       <h3 className="text-xl font-bold">{classe.title}</h3>
-      {classe.description && <p>description: {classe.description}</p>}
+      {classe.description && <p>Description: {classe.description}</p>}
       <p>Durée: {classe.duration} minutes</p>
       <p>
         Date:{" "}

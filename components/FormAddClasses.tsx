@@ -5,6 +5,7 @@ import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
+import { IoClose } from "react-icons/io5";
 
 interface FormAddClassesProps {
   startTransition: React.TransitionStartFunction;
@@ -47,7 +48,13 @@ const FormAddClasses: React.FC<FormAddClassesProps> = ({
     setReload(true);
   };
   return (
-    <form action={handleSubmit} className="w-full md:w2/3 lg:w-1/3">
+    <form
+      action={handleSubmit}
+      className="w-full md:w2/3 lg:w-1/3 shadow border rounded-lg p-4"
+    >
+      <div className="flex justify-end" onClick={() => setAddClass(false)}>
+        <IoClose className="text-2xl" />
+      </div>
       <fieldset className="grid drif-cols-1 w-full gap-4" disabled={isPending}>
         <h2 className="text-2xl font-bold ">Ajouter un cours</h2>
         <div>

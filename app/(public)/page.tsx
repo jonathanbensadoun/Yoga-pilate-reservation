@@ -157,7 +157,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col  item-center p-24 text-center">
       {successAddClass && (
         <Alert
-          className="absolute right-0 left-0 top-0 text-green-700 bg-green-200"
+          className="absolute right-0 left-0 top-0 text-green-700 bg-green-200 z-50"
           onClick={() => {
             setSuccessAddClass(false);
             setErrorAddClass(false);
@@ -168,7 +168,7 @@ export default function Home() {
         </Alert>
       )}
       {errorAddClass && (
-        <Alert className="absolute right-0 left-0 top-0 text-red-700 bg-red-200">
+        <Alert className="absolute right-0 left-0 top-0 text-red-700 bg-red-200 z-50">
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{messageAlert}</AlertDescription>
         </Alert>
@@ -192,7 +192,7 @@ export default function Home() {
           {classes.map((classe) => (
             <li
               key={classe.id}
-              className="border rounded-md p-2 my-2 flex flex-col justify-around items-center gap-4 lg:w-1/3"
+              className="border rounded-md p-2 my-2 flex flex-col justify-around items-center gap-4 lg:w-1/3 shadow"
             >
               <CardClasses
                 classe={classe}

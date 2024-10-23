@@ -83,9 +83,13 @@ const Reservations: React.FC<ReservationsProps> = ({
             return dateA - dateB;
           })
           .map((reservation) => (
-            <li key={reservation.id} className="border rounded-md mt-2 p-4 ">
-              <div className="flex justify-between items-center ">
+            <li
+              key={reservation.id}
+              className="border rounded-md mt-2 p-4 shadow "
+            >
+              <div className="flex flex-col md:flex-row justify-between items-center ">
                 <Image
+                  className="rounded-md"
                   src="/img/Pilate.png"
                   alt="sale de pilate"
                   width={80}
@@ -113,7 +117,7 @@ const Reservations: React.FC<ReservationsProps> = ({
                 ).getTime() -
                   new Date().getTime() >
                 48 * 60 * 60 * 1000 ? (
-                  <>
+                  <div className="w-1/3">
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button className="bg-red-500 text-white px-4 py-2 rounded-md">
@@ -141,9 +145,9 @@ const Reservations: React.FC<ReservationsProps> = ({
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
-                  </>
+                  </div>
                 ) : (
-                  <p className="text-red-500">
+                  <p className="text-red-500 w-full md:w-1/3">
                     Vous ne pouvez plus annuler cette réservation.
                   </p>
                 )}
