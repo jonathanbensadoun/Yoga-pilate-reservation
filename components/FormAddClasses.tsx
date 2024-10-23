@@ -50,7 +50,7 @@ const FormAddClasses: React.FC<FormAddClassesProps> = ({
   return (
     <form
       action={handleSubmit}
-      className="w-full md:w2/3 lg:w-1/3 shadow border rounded-lg p-4"
+      className=" md:w2/3 lg:w-1/3 shadow border rounded-lg p-4"
     >
       <div className="flex justify-end" onClick={() => setAddClass(false)}>
         <IoClose className="text-2xl" />
