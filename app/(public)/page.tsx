@@ -11,6 +11,7 @@ import {
   getReservations,
   addReservation,
   getClassesDate,
+  getAllClasses,
 } from "@/utils/auth/action";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Reservations from "@/components/Reservations";
@@ -65,28 +66,28 @@ export default function Home() {
   const [selectedDateForFetch, setSelectedDateForFetch] = useState<Date>(
     new Date()
   );
+  const [allClasses, setAllClasses] = useState<Classe[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       const dataReservations = await getReservations();
-      // const dataClasses = await getClasses(selectedDateForFetch);
       const dataProfile = await getProfile();
       const dataClassesDate = await getClassesDate();
+      const dataAllClasses = await getAllClasses();
       setClassesDate(dataClassesDate);
       setProfile(dataProfile[0]);
       setReservations(dataReservations);
-      // setClasses(dataClasses);
+      setAllClasses(dataAllClasses);
       setReload(false);
     }
 
     fetchData();
-  }, [reload, selectedDateForFetch]);
+  }, [reload]);
 
   useEffect(() => {
-    console.log("selectedDateForFetch", selectedDateForFetch);
     async function fetchClasses() {
       const dataClasses = await getClasses(selectedDateForFetch);
-      console.log("dataClasses", dataClasses);
+
       setClasses(dataClasses);
     }
 
@@ -156,7 +157,15 @@ export default function Home() {
         classesDate={classesDate}
         setSelectedDateForFetch={setSelectedDateForFetch}
       />
-      <h2 className="text-2xl font-bold mt-4">Séance(s) du jour</h2>
+      <h2 className="text-2xl font-bold mt-4">
+        Séance(s) du{" "}
+        {selectedDateForFetch.toLocaleDateString("fr-FR", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+      </h2>
       {classes.length >= 1 ? (
         <ul className="flex flex-col justify-center items-center my-4">
           {classes.map((classe) => (
@@ -204,7 +213,7 @@ export default function Home() {
           <div className="lg:w-1/3">
             <Reservations
               reservations={reservations}
-              classes={classes}
+              classes={allClasses}
               startTransition={startTransition}
               setMessageAlert={setMessageAlert}
               setSuccessAddClass={setSuccessAddClass}

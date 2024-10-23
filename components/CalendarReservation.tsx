@@ -21,11 +21,11 @@ export default function CalendarReservation({
       setSelectedDateForFetch(selected);
     }
   }, [selected, setSelectedDateForFetch]);
-  // Convertir `classesDate` en objets `Date`
+
   const bookedDays = classesDate
     .map((classe) => classe.class_date)
-    .filter((date) => date !== null) // Filtrer les dates nulles
-    .map((date) => new Date(date as string)); // Convertir en objets Date
+    .filter((date) => date !== null)
+    .map((date) => new Date(date as string));
 
   return (
     <div className="w-full flex justify-center items-center">
@@ -35,25 +35,24 @@ export default function CalendarReservation({
         selected={selected}
         onSelect={setSelected}
         className="rounded-md border"
-        footer={
-          selected
-            ? ` ${selected.toLocaleDateString("fr-FR", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}`
-            : "Pick a day."
-        }
+        // footer={
+        //   selected
+        //     ? ` ${selected.toLocaleDateString("fr-FR", {
+        //         weekday: "long",
+        //         year: "numeric",
+        //         month: "long",
+        //         day: "numeric",
+        //       })}`
+        //     : "Pick a day."
+        // }
         disabled={(date) => date < new Date()}
-        // Ajouter la logique pour colorer les jours avec classes en vert
         modifiers={{
-          booked: bookedDays, // Les jours réservés sont marqués comme 'booked'
+          booked: bookedDays,
         }}
         modifiersClassNames={{
-          booked: "bg-green-500 text-white", // Fond vert pour les jours réservés
+          booked: "bg-green-500 text-white",
         }}
-        defaultMonth={bookedDays[0]} // Mois par défaut pour la vue du calendrier
+        defaultMonth={bookedDays[0]}
       />
     </div>
   );

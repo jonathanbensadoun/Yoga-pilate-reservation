@@ -52,7 +52,6 @@ const Reservations: React.FC<ReservationsProps> = ({
   setReload,
 }) => {
   const handleDeleteReservation = (id: string) => {
-    console.log("delete reservation", id);
     startTransition(() => {
       deleteReservation(id)
         .then(() => {
@@ -71,11 +70,19 @@ const Reservations: React.FC<ReservationsProps> = ({
     <div>
       <h2 className="text-2xl font-bold">Mes réservations</h2>
       <ul>
-        {reservations.map((reservation) => {
-          const reservedClass = classes.find(
-            (classe) => classe.id === reservation.classes_id
-          );
-          return (
+        {reservations
+          .map((reservation) => {
+            const reservedClass = classes.find(
+              (classe) => classe.id === reservation.classes_id
+            );
+            return { ...reservation, reservedClass };
+          })
+          .sort((a, b) => {
+            const dateA = new Date(a.reservedClass?.class_date || "").getTime();
+            const dateB = new Date(b.reservedClass?.class_date || "").getTime();
+            return dateA - dateB;
+          })
+          .map((reservation) => (
             <li key={reservation.id} className="border rounded-md mt-2 p-4 ">
               <div className="flex justify-between items-center ">
                 <Image
@@ -85,12 +92,12 @@ const Reservations: React.FC<ReservationsProps> = ({
                   height={80}
                 />
                 <div>
-                  <p>Titre du cours: {reservedClass?.title}</p>
-                  <p>Description: {reservedClass?.description}</p>
+                  <p>Titre du cours: {reservation.reservedClass?.title}</p>
+                  <p>Description: {reservation.reservedClass?.description}</p>
                   <p>
                     Date:{" "}
                     {new Date(
-                      reservedClass?.class_date || ""
+                      reservation.reservedClass?.class_date || ""
                     ).toLocaleDateString("fr-FR", {
                       weekday: "long",
                       year: "numeric",
@@ -101,7 +108,9 @@ const Reservations: React.FC<ReservationsProps> = ({
                     })}
                   </p>
                 </div>
-                {new Date(reservedClass?.class_date || "").getTime() -
+                {new Date(
+                  reservation.reservedClass?.class_date || ""
+                ).getTime() -
                   new Date().getTime() >
                 48 * 60 * 60 * 1000 ? (
                   <>
@@ -140,8 +149,7 @@ const Reservations: React.FC<ReservationsProps> = ({
                 )}
               </div>
             </li>
-          );
-        })}
+          ))}
       </ul>
     </div>
   );

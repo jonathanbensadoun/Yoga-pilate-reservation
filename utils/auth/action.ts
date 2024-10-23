@@ -54,9 +54,7 @@ export const getReservations = async () => {
 }
 
 export const getClasses = async (selectedDateForFetch: Date) => {
-    const supabase = createClientServer();
-
-    // Obtenir la date de début et de fin pour la journée entière
+    const supabase = createClientServer();   
     const startOfDay = new Date(selectedDateForFetch.setHours(0, 0, 0, 0)).toISOString();
     const endOfDay = new Date(selectedDateForFetch.setHours(23, 59, 59, 999)).toISOString();
 
@@ -73,9 +71,26 @@ export const getClasses = async (selectedDateForFetch: Date) => {
     }
     return data;
 }
+export const getAllClasses = async () => {
+    const supabase = createClientServer();
+    const { data, error } = await supabase.from("classes").select("*").order("class_date", { ascending: true });
+
+    if (error) {
+        console.error("Error fetching classes:", error);
+        return [];
+    }
+    return data;
+}
+
 export const getClassesDate = async () => {   
     const supabase = createClientServer();
-    const { data, error } = await supabase.from("classes").select("class_date").gte("class_date", new Date().toISOString()).order("class_date", { ascending: true });
+    const { data, error } = await supabase
+        .from("classes")
+        .select("class_date")
+        .gte("class_date", new Date().toISOString())
+        .gt("available_slots", 0) 
+        .order("class_date", { ascending: true });
+        
     if (error) {
         console.error("Error fetching classes:", error);
         return [];
