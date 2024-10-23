@@ -94,6 +94,7 @@ const Reservations: React.FC<ReservationsProps> = ({
                   alt="sale de pilate"
                   width="776"
                   height="997"
+                  priority={true}
                 />
                 <div>
                   <p>Titre du cours: {reservation.reservedClass?.title}</p>

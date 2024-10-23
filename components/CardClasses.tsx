@@ -45,6 +45,7 @@ export default function CardClasses({
         alt="sale de pilate"
         width="776"
         height="997"
+        priority={true}
       />
       <h3 className="text-xl font-bold">{classe.title}</h3>
       {classe.description && <p>Description: {classe.description}</p>}
