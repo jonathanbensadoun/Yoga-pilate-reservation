@@ -12,6 +12,7 @@ import {
   addReservation,
   getClassesDate,
   getAllClasses,
+  getAllProfiles,
 } from "@/utils/auth/action";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Reservations from "@/components/Reservations";
@@ -20,6 +21,7 @@ import FormAddClasses from "@/components/FormAddClasses";
 import DeleteClasses from "@/components/DeleteClasses";
 import CardClasses from "@/components/CardClasses";
 import CalendarReservation from "@/components/CalendarReservation";
+import ListStudent from "@/components/ListStudent";
 
 interface Reservation {
   classes_id: string | null;
@@ -48,6 +50,13 @@ interface Profil {
 interface ClasseDate {
   class_date: string | null;
 }
+interface AllProfile {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  email: string | null;
+  phone: string | null;
+}
 
 export default function Home() {
   const [classes, setClasses] = useState<Classe[]>([]);
@@ -67,6 +76,7 @@ export default function Home() {
     new Date()
   );
   const [allClasses, setAllClasses] = useState<Classe[]>([]);
+  const [allProfiles, setAllProfiles] = useState<AllProfile[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -74,6 +84,7 @@ export default function Home() {
       const dataProfile = await getProfile();
       const dataClassesDate = await getClassesDate();
       const dataAllClasses = await getAllClasses();
+
       setClassesDate(dataClassesDate);
       setProfile(dataProfile[0]);
       setReservations(dataReservations);
@@ -93,6 +104,16 @@ export default function Home() {
 
     fetchClasses();
   }, [selectedDateForFetch]);
+
+  useEffect(() => {
+    async function fetchProfiles() {
+      if (profil && profil.admin) {
+        const dataProfiles = await getAllProfiles();
+        setAllProfiles(dataProfiles);
+      }
+    }
+    fetchProfiles();
+  }, [profil]);
 
   const handleDelete = async (id: string) => {
     startTransition(() => {
@@ -179,6 +200,13 @@ export default function Home() {
                 profil={profil!}
               />
 
+              {profil && profil.admin && (
+                <ListStudent
+                  reservations={reservations}
+                  classes={classes}
+                  allProfiles={allProfiles}
+                />
+              )}
               {profil && profil.admin && (
                 <DeleteClasses handleDelete={handleDelete} classe={classe} />
               )}

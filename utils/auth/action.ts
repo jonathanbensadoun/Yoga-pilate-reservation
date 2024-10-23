@@ -101,6 +101,18 @@ export const getClassesDate = async () => {
 export const getProfile = async () => {
     const supabase = createClientServer();
     const { data, error } = await supabase.from("profiles").select("*");
+   
+    if (error) {
+        console.error("Error fetching profile:", error);
+        return [];
+    }
+    return data;
+}
+
+export const getAllProfiles = async () => {
+    const supabase = createClientServer();
+    const { data, error } = await supabase.from("profiles_contact_details").select("*");
+   
     if (error) {
         console.error("Error fetching profile:", error);
         return [];
@@ -144,6 +156,7 @@ export const addReservation = async (classId: string, userId:string ) => {
        user_id: userId,
        classes_id: classId,
     }]);
+
     if (error) {
         
         throw error;
@@ -158,3 +171,4 @@ export const deleteReservation = async (id: string) => {
         throw error;
     }
 }
+
