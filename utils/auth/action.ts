@@ -55,7 +55,16 @@ export const getReservations = async () => {
 
 export const getClasses = async () => {
     const supabase = createClientServer();
-    const { data, error } = await supabase.from("classes").select("*").lte("class_date", new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()).gte("class_date", new Date().toISOString()).order("class_date", { ascending: true });
+    const { data, error } = await supabase.from("classes").select("*").order("class_date", { ascending: true });
+    if (error) {
+        console.error("Error fetching classes:", error);
+        return [];
+    }
+    return data;
+}
+export const getClassesDate = async () => {   
+    const supabase = createClientServer();
+    const { data, error } = await supabase.from("classes").select("class_date").gte("class_date", new Date().toISOString()).order("class_date", { ascending: true });
     if (error) {
         console.error("Error fetching classes:", error);
         return [];

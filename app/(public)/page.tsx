@@ -10,6 +10,7 @@ import {
   getProfile,
   getReservations,
   addReservation,
+  getClassesDate,
 } from "@/utils/auth/action";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Reservations from "@/components/Reservations";
@@ -43,6 +44,9 @@ interface Profil {
   id: string;
   last_name: string | null;
 }
+interface ClasseDate {
+  class_date: string | null;
+}
 
 export default function Home() {
   const [classes, setClasses] = useState<Classe[]>([]);
@@ -57,12 +61,15 @@ export default function Home() {
   const [errorAddClass, setErrorAddClass] = useState<boolean>(false);
   const [messageAlert, setMessageAlert] = useState<string>("");
   const [addClass, setAddClass] = useState<boolean>(false);
+  const [classesDate, setClassesDate] = useState<ClasseDate[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       const dataReservations = await getReservations();
       const dataClasses = await getClasses();
       const dataProfile = await getProfile();
+      const dataClassesDate = await getClassesDate();
+      setClassesDate(dataClassesDate);
       setProfile(dataProfile[0]);
       setReservations(dataReservations);
       setClasses(dataClasses);
@@ -134,7 +141,7 @@ export default function Home() {
         </Alert>
       )}
 
-      <CalendarReservation />
+      <CalendarReservation classes={classes} classesDate={classesDate} />
       <h2 className="text-2xl font-bold ">Les cours actuels</h2>
       {classes.length >= 1 ? (
         <ul className="flex flex-col justify-center items-center my-4">
