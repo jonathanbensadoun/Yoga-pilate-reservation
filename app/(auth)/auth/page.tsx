@@ -45,9 +45,9 @@ export default function AuthPage() {
     <div className="h-screen flex flex-col justify-center items-center">
       <Image
         src="/img/Logo_Laure_S.jpg"
-        width={300}
-        height={150}
-        className="rounded-full mb-8"
+        width={1798}
+        height={2454}
+        className="rounded-full mb-8 w-2/3 md:w-1/3 xl:w-1/4"
         alt="Logo de Laure Sautier c'est des mains qui entoure le buste d'une personne représente la proffession de Ostéopathe"
       />
       <h2 className="text-2xl">{!signup ? "Connexion" : "Inscription"}</h2>

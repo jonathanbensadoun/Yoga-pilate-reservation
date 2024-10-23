@@ -89,11 +89,11 @@ const Reservations: React.FC<ReservationsProps> = ({
             >
               <div className="flex flex-col md:flex-row justify-between items-center ">
                 <Image
-                  className="rounded-md"
+                  className="rounded-md w-1/2 md:w-1/3 xl:1/5"
                   src="/img/Pilate.png"
                   alt="sale de pilate"
-                  width={80}
-                  height={80}
+                  width={776}
+                  height={997}
                 />
                 <div>
                   <p>Titre du cours: {reservation.reservedClass?.title}</p>
