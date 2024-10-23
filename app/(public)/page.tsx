@@ -103,7 +103,7 @@ export default function Home() {
     }
 
     fetchClasses();
-  }, [selectedDateForFetch]);
+  }, [reload, selectedDateForFetch]);
 
   useEffect(() => {
     async function fetchProfiles() {
