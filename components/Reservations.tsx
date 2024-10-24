@@ -99,7 +99,7 @@ const Reservations: React.FC<ReservationsProps> = ({
                 <div>
                   <p>Titre du cours: {reservation.reservedClass?.title}</p>
                   <p>Description: {reservation.reservedClass?.description}</p>
-                  <p>
+                  <p className="text-md font-bold">
                     Date:{" "}
                     {new Date(
                       reservation.reservedClass?.class_date || ""
@@ -108,9 +108,16 @@ const Reservations: React.FC<ReservationsProps> = ({
                       year: "numeric",
                       month: "long",
                       day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
                     })}
+                    <span className="font-bold text-lg">
+                      {" "}
+                      {new Date(
+                        reservation.reservedClass?.class_date || ""
+                      ).toLocaleTimeString("fr-FR", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
                   </p>
                 </div>
                 {new Date(

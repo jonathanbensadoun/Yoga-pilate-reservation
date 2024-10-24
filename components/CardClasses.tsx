@@ -50,16 +50,21 @@ export default function CardClasses({
       <h3 className="text-xl font-bold">{classe.title}</h3>
       {classe.description && <p>Description: {classe.description}</p>}
       <p>Durée: {classe.duration} minutes</p>
-      <p>
+      <p className="text-lg font-bold">
         Date:{" "}
         {new Date(classe.class_date || "").toLocaleDateString("fr-FR", {
           weekday: "long",
           year: "numeric",
           month: "long",
           day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
         })}
+        <span className="font-bold text-xl">
+          {" "}
+          {new Date(classe.class_date || "").toLocaleTimeString("fr-FR", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </span>
       </p>
 
       <AlertDialog>
