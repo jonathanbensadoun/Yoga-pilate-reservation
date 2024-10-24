@@ -110,7 +110,8 @@ export default function ListStudent({
                                 </AlertDialogTitle>
                                 <AlertDialogDescription>
                                   Êtes-vous sûr de vouloir annuler cette
-                                  réservation?
+                                  réservation de {profile.first_name}{" "}
+                                  {profile.last_name} ?
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>

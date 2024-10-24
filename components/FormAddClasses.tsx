@@ -96,7 +96,7 @@ const FormAddClasses: React.FC<FormAddClassesProps> = ({
               <PopoverTrigger asChild>
                 <Button>Selection de la date et de l&apos;heure</Button>
               </PopoverTrigger>
-              <PopoverContent>
+              <PopoverContent className="w-full">
                 <Calendar
                   mode="single"
                   selected={selectedDate}

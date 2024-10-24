@@ -99,6 +99,7 @@ const Reservations: React.FC<ReservationsProps> = ({
                 <div>
                   <p>Titre du cours: {reservation.reservedClass?.title}</p>
                   <p>Description: {reservation.reservedClass?.description}</p>
+                  <p>Durée: {reservation.reservedClass?.duration} minutes</p>
                   <p className="text-md font-bold">
                     Date:{" "}
                     {new Date(
