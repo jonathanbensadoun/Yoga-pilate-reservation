@@ -202,9 +202,15 @@ export default function Home() {
 
               {profil && profil.admin && (
                 <ListStudent
+                  classesId={classe.id}
                   reservations={reservations}
                   classes={classes}
                   allProfiles={allProfiles}
+                  startTransition={startTransition}
+                  setMessageAlert={setMessageAlert}
+                  setSuccessAddClass={setSuccessAddClass}
+                  setErrorAddClass={setErrorAddClass}
+                  setReload={setReload}
                 />
               )}
               {profil && profil.admin && (
