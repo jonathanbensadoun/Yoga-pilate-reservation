@@ -79,15 +79,6 @@ const FormAddClasses: React.FC<FormAddClassesProps> = ({
           />
         </div>
         <div className=" flex flex-col justify-center items-center gap-4  ">
-          {selectedDate && (
-            <p className="text-xl font-bold ">
-              {selectedDate.toLocaleDateString("fr-FR")}{" "}
-              {selectedDate.toLocaleTimeString("fr-FR", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
-          )}
           <div>
             <label htmlFor="class_date" className="mr-4">
               Date et heure
@@ -103,6 +94,7 @@ const FormAddClasses: React.FC<FormAddClassesProps> = ({
                   onSelect={setSelectedDate}
                 />
                 <Input
+                  step={60}
                   type="time"
                   id="class_time"
                   name="class_time"
@@ -119,6 +111,15 @@ const FormAddClasses: React.FC<FormAddClassesProps> = ({
                 />
               </PopoverContent>
             </Popover>
+            {selectedDate && (
+              <p className="text-xl font-bold mt-4">
+                {selectedDate.toLocaleDateString("fr-FR")}{" "}
+                {selectedDate.toLocaleTimeString("fr-FR", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </p>
+            )}
           </div>
         </div>
 
