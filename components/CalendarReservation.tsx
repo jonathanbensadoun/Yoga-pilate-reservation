@@ -41,22 +41,31 @@ export default function CalendarReservation({
         }
         modifiers={bookedDays.reduce<Record<string, Date[]>>(
           (acc, date) => {
-            const classe = classesDate.find(
+            const classesForDate = classesDate.filter(
               (classe) =>
                 new Date(classe.class_date as string).toDateString() ===
                 date.toDateString()
             );
-            if (classe) {
-              acc[
-                (classe.available_slots ?? 0) > 0 ? "available" : "unavailable"
-              ].push(date);
+            const availableSlots = classesForDate.reduce(
+              (sum, classe) => sum + (classe.available_slots ?? 0),
+              0
+            );
+
+            if (availableSlots === 0) {
+              acc["unavailable"].push(date);
+            } else if (availableSlots > 0 && availableSlots <= 3) {
+              acc["limited"].push(date);
+            } else {
+              acc["available"].push(date);
             }
+
             return acc;
           },
-          { available: [], unavailable: [] }
+          { available: [], limited: [], unavailable: [] }
         )}
         modifiersClassNames={{
           available: "bg-green-500 text-white",
+          limited: "bg-orange-300 text-white",
           unavailable: "bg-gray-300 text-white",
         }}
         defaultMonth={bookedDays[0]}
