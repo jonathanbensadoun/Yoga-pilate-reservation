@@ -86,9 +86,9 @@ export const getClassesDate = async () => {
     const supabase = createClientServer();
     const { data, error } = await supabase
         .from("classes")
-        .select("class_date")
+        .select("class_date, available_slots")
         .gte("class_date", new Date().toISOString())
-        .gt("available_slots", 0) 
+        // .gt("available_slots", 0) 
         .order("class_date", { ascending: true });
         
     if (error) {

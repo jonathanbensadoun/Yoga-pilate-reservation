@@ -3,6 +3,7 @@ import { Calendar } from "./ui/calendar";
 
 interface ClasseDate {
   class_date: string | null;
+  available_slots: number | null;
 }
 
 interface CalendarReservationProps {
@@ -38,11 +39,25 @@ export default function CalendarReservation({
         disabled={(date) =>
           date < new Date(new Date().setDate(new Date().getDate() - 1))
         }
-        modifiers={{
-          booked: bookedDays,
-        }}
+        modifiers={bookedDays.reduce<Record<string, Date[]>>(
+          (acc, date) => {
+            const classe = classesDate.find(
+              (classe) =>
+                new Date(classe.class_date as string).toDateString() ===
+                date.toDateString()
+            );
+            if (classe) {
+              acc[
+                (classe.available_slots ?? 0) > 0 ? "available" : "unavailable"
+              ].push(date);
+            }
+            return acc;
+          },
+          { available: [], unavailable: [] }
+        )}
         modifiersClassNames={{
-          booked: "bg-green-500 text-white",
+          available: "bg-green-500 text-white",
+          unavailable: "bg-gray-300 text-white",
         }}
         defaultMonth={bookedDays[0]}
       />

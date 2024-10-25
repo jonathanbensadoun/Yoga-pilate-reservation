@@ -49,6 +49,7 @@ interface Profil {
 }
 interface ClasseDate {
   class_date: string | null;
+  available_slots: number | null;
 }
 interface AllProfile {
   id: string;
