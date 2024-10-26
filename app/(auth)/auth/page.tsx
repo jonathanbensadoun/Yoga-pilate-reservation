@@ -4,7 +4,11 @@ import React, { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signInWithPassword, signUpWithPassword } from "@/utils/auth/action";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+  AiOutlineLoading3Quarters,
+} from "react-icons/ai";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -13,6 +17,9 @@ import Image from "next/image";
 export default function AuthPage() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [passwordConfirmationVisibility, setPasswordConfirmationVisibility] =
+    useState(false);
   const query = useSearchParams().get("query");
 
   const signup = query === "signup";
@@ -34,10 +41,39 @@ export default function AuthPage() {
   };
 
   const handleSubmit = (formData: FormData) => {
+    setError(null);
+    const password = formData.get("password") as string;
+
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    const phoneRegex = /^0[1-9]([-. ]?[0-9]{2}){4}$/;
+
+    if (signup && !phoneRegex.test(formData.get("phone") as string)) {
+      setError("Numéro de téléphone invalide");
+      return;
+    }
+    if (!emailRegex.test(formData.get("email") as string)) {
+      setError("Email invalide");
+      return;
+    }
+
+    if (formData.get("password") !== formData.get("confirm_password")) {
+      setError("Les mots de passe ne correspondent pas");
+      return;
+    }
+    if (!passwordRegex.test(password)) {
+      setError(
+        "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial"
+      );
+      return;
+    }
     if (signup) {
       handleSignUp(formData);
+      setError(null);
     } else {
       handleSignIn(formData);
+      setError(null);
     }
   };
 
@@ -59,12 +95,54 @@ export default function AuthPage() {
           disabled={isPending}
         >
           <Input type="email" name="email" placeholder="Email" required />
-          <Input
-            type="password"
-            name="password"
-            placeholder="Mot de passe"
-            required
-          />
+          <div className="relative">
+            <Input
+              type={passwordVisibility ? "text" : "password"}
+              name="password"
+              placeholder="Mot de passe"
+              required
+            />
+            {!passwordVisibility ? (
+              <AiOutlineEyeInvisible
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setPasswordVisibility(!passwordVisibility)}
+              />
+            ) : (
+              <AiOutlineEye
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setPasswordVisibility(!passwordVisibility)}
+              />
+            )}
+          </div>
+          {signup && (
+            <div className="relative">
+              <Input
+                type={passwordConfirmationVisibility ? "text" : "password"}
+                name="confirm_password"
+                placeholder="Confirmez le mot de passe"
+                required
+              />
+              {!passwordConfirmationVisibility ? (
+                <AiOutlineEyeInvisible
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  onClick={() =>
+                    setPasswordConfirmationVisibility(
+                      !passwordConfirmationVisibility
+                    )
+                  }
+                />
+              ) : (
+                <AiOutlineEye
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  onClick={() =>
+                    setPasswordConfirmationVisibility(
+                      !passwordConfirmationVisibility
+                    )
+                  }
+                />
+              )}
+            </div>
+          )}
           {signup && (
             <>
               <Input
