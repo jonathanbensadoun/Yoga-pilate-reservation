@@ -53,16 +53,19 @@ export default function AuthPage() {
       setError("Numéro de téléphone invalide");
       return;
     }
-    if (!emailRegex.test(formData.get("email") as string)) {
+    if (signup && !emailRegex.test(formData.get("email") as string)) {
       setError("Email invalide");
       return;
     }
 
-    if (formData.get("password") !== formData.get("confirm_password")) {
+    if (
+      signup &&
+      formData.get("password") !== formData.get("confirm_password")
+    ) {
       setError("Les mots de passe ne correspondent pas");
       return;
     }
-    if (!passwordRegex.test(password)) {
+    if (signup && !passwordRegex.test(password)) {
       setError(
         "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial"
       );
