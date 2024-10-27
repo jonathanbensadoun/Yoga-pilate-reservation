@@ -156,10 +156,14 @@ export default function Home() {
   }, [successAddClass, errorAddClass]);
 
   return (
-    <main className="flex min-h-screen flex-col  item-center p-24 text-center">
+    <main className="flex min-h-screen flex-col  item-center p-24 text-center ">
+      <CalendarReservation
+        classesDate={classesDate}
+        setSelectedDateForFetch={setSelectedDateForFetch}
+      />
       {successAddClass && (
         <Alert
-          className="absolute right-0 left-0 top-0 text-green-700 bg-green-200 z-50"
+          className="fixe bottom-0 right-0 left-0 text-green-700 bg-green-200  mt-4"
           onClick={() => {
             setSuccessAddClass(false);
             setErrorAddClass(false);
@@ -170,16 +174,11 @@ export default function Home() {
         </Alert>
       )}
       {errorAddClass && (
-        <Alert className="absolute right-0 left-0 top-0 text-red-700 bg-red-200 z-50">
+        <Alert className="fixe bottom-0 right-0 left-0 text-red-700 bg-red-200  mt-4">
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{messageAlert}</AlertDescription>
         </Alert>
       )}
-
-      <CalendarReservation
-        classesDate={classesDate}
-        setSelectedDateForFetch={setSelectedDateForFetch}
-      />
       <h2 className="text-2xl font-bold mt-4">
         Séance(s) du{" "}
         {selectedDateForFetch.toLocaleDateString("fr-FR", {
@@ -190,11 +189,11 @@ export default function Home() {
         })}
       </h2>
       {classes.length >= 1 ? (
-        <ul className="flex flex-col justify-center items-center my-4">
+        <ul className="flex flex-col justify-center items-center my-4 ">
           {classes.map((classe) => (
             <li
               key={classe.id}
-              className="border rounded-md p-2 my-2 flex flex-col justify-center items-center gap-4 w-full md:2/3 lg:w-1/3 shadow"
+              className="border rounded-md p-2 my-2 flex flex-col justify-center items-center gap-4  md:2/3 lg:w-1/3 shadow"
             >
               <CardClasses
                 classe={classe}
