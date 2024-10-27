@@ -20,7 +20,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="flex items-center justify-center px-8 p-4 fixed w-screen lg:w-2/3 xl:w-1/2 rounded-b-3xl bg-gray-50 z-40 shadow  ">
+    <div className="flex items-center justify-center px-8 p-4 fixed w-screen lg:w-3/4 xl:w-2/3 rounded-b-3xl bg-gray-50 z-40 shadow  ">
       <div>
         <h2 className="text-2xl">Réservation des cours de pilate</h2>
       </div>
