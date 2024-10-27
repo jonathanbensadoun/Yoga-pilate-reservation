@@ -30,7 +30,7 @@ export default function CalendarReservation({
     .map((date) => new Date(date as string));
 
   return (
-    <div className="w-full flex flex-col md:flex-row justify-center items-center mt-8 md:mt-0 gap-4">
+    <div className="w-full flex flex-col md:flex-row justify-center items-center mt-10 md:mt-0 gap-4">
       <Calendar
         captionLayout="dropdown-buttons"
         mode="single"

@@ -194,14 +194,14 @@ export default function Home() {
           {classes.map((classe) => (
             <li
               key={classe.id}
-              className="border rounded-md p-2 my-2 flex flex-col justify-around items-center gap-4 lg:w-1/3 shadow"
+              className="border rounded-md p-2 my-2 flex flex-col justify-center items-center gap-4 w-full md:2/3 lg:w-1/3 shadow"
             >
               <CardClasses
                 classe={classe}
                 handleReservation={handleReservation}
                 profil={profil!}
               />
-              {profil && profil.admin && (
+              {profil && profil.admin && classe.available_slots !== 0 && (
                 <AddPatientToClass
                   allProfiles={allProfiles}
                   classId={classe.id}
