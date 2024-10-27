@@ -62,7 +62,10 @@ const AddPatientToClass: React.FC<AddPatientToClassProps> = ({
                   className="py-2 border-b"
                   onClick={() => handleProfileClick(profile.id)}
                 >
-                  {profile.first_name} {profile.last_name} - {profile.email}
+                  <p>
+                    {profile.first_name} {profile.last_name}
+                  </p>
+                  <p>{profile.email}</p>
                 </li>
               ))}
             </ul>
