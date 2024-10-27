@@ -22,6 +22,7 @@ import DeleteClasses from "@/components/DeleteClasses";
 import CardClasses from "@/components/CardClasses";
 import CalendarReservation from "@/components/CalendarReservation";
 import ListStudent from "@/components/ListStudent";
+import AddPatientToClass from "@/components/AddPatientToClass";
 
 interface Reservation {
   classes_id: string | null;
@@ -200,6 +201,13 @@ export default function Home() {
                 handleReservation={handleReservation}
                 profil={profil!}
               />
+              {profil && profil.admin && (
+                <AddPatientToClass
+                  allProfiles={allProfiles}
+                  classId={classe.id}
+                  handleReservation={handleReservation}
+                />
+              )}
 
               {profil && profil.admin && (
                 <ListStudent
