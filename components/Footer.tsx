@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="flex flex-row gap-2">
         <Link href={`/auth/terms`}>Conditions Générales</Link>
         <Link href={`/auth/privacy`}>Confidentialité</Link>
-        <Link href={`mailto:laurecoachpilates@gmail.com`}>Contact</Link>
+        <a href={`mailto:laurecoachpilates@gmail.com`}>Contact</a>
       </div>
     </footer>
   );
