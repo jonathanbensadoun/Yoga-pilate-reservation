@@ -22,7 +22,7 @@ export default function NavbarAuth() {
           disabled={isPending}
           className="flex gap-2"
         >
-          <AiOutlineHome />
+          <AiOutlineHome className="text-2xl" />
         </button>
       </div>
     </div>
