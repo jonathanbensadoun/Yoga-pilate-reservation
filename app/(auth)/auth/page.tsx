@@ -81,7 +81,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
+    <div className="h-full flex flex-col justify-center items-center">
       <Image
         className="rounded-full mb-8 w-2/3 md:w-1/3 xl:w-1/4 h-auto"
         src="/img/Logo_Laure_S.jpg"
