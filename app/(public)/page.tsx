@@ -79,21 +79,20 @@ export default function Home() {
   );
   const [allClasses, setAllClasses] = useState<Classe[]>([]);
   const [allProfiles, setAllProfiles] = useState<AllProfile[]>([]);
+  async function fetchData() {
+    const dataReservations = await getReservations();
+    const dataProfile = await getProfile();
+    const dataClassesDate = await getClassesDate();
+    const dataAllClasses = await getAllClasses();
+
+    setClassesDate(dataClassesDate);
+    setProfile(dataProfile[0]);
+    setReservations(dataReservations);
+    setAllClasses(dataAllClasses);
+    setReload(false);
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const dataReservations = await getReservations();
-      const dataProfile = await getProfile();
-      const dataClassesDate = await getClassesDate();
-      const dataAllClasses = await getAllClasses();
-
-      setClassesDate(dataClassesDate);
-      setProfile(dataProfile[0]);
-      setReservations(dataReservations);
-      setAllClasses(dataAllClasses);
-      setReload(false);
-    }
-
     fetchData();
   }, [reload]);
 
