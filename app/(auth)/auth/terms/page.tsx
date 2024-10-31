@@ -71,14 +71,7 @@ const TermsPage: React.FC = () => {
 
       <section className="bg-white rounded-lg shadow-md p-8 mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-indigo-700">
-          4. Tarifs et Paiements
-        </h2>
-        <p className="text-gray-700 leading-relaxed">à définir</p>
-      </section>
-
-      <section className="bg-white rounded-lg shadow-md p-8 mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-indigo-700">
-          5. Responsabilité
+          4. Responsabilité
         </h2>
         <p className="text-gray-700 leading-relaxed">
           Nous nous efforçons de maintenir la disponibilité et la sécurité de
@@ -90,7 +83,7 @@ const TermsPage: React.FC = () => {
 
       <section className="bg-white rounded-lg shadow-md p-8 mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-indigo-700">
-          6. Modifications des CGU
+          5. Modifications des CGU
         </h2>
         <p className="text-gray-700 leading-relaxed">
           Nous nous réservons le droit de modifier les présentes CGU à tout
@@ -101,7 +94,7 @@ const TermsPage: React.FC = () => {
 
       <section className="bg-white rounded-lg shadow-md p-8 mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-indigo-700">
-          7. Contact
+          6. Contact
         </h2>
         <p className="text-gray-700 leading-relaxed">
           Pour toute question concernant ces conditions générales
