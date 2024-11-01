@@ -108,6 +108,15 @@ const TermsPage: React.FC = () => {
           .
         </p>
       </section>
+      <section className="bg-white rounded-lg shadow-md p-8 mb-8">
+        <h2 className="text-2xl font-semibold mb-4 text-indigo-700">
+          7. Droit applicable
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          Les présentes conditions générales d’utilisation sont régies par le
+          droit français.
+        </p>
+      </section>
 
       <div className="text-center mt-10">
         <Button className="px-6 py-3 bg-indigo-700 text-white font-semibold rounded-lg hover:bg-indigo-800">
