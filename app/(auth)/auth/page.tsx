@@ -13,6 +13,8 @@ import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { RocketIcon } from "lucide-react";
 
 export default function AuthPage() {
   const [isPending, startTransition] = useTransition();
@@ -20,6 +22,7 @@ export default function AuthPage() {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [passwordConfirmationVisibility, setPasswordConfirmationVisibility] =
     useState(false);
+  const [messages, setMessages] = useState("");
   const query = useSearchParams().get("query");
 
   const signup = query === "signup";
@@ -73,9 +76,13 @@ export default function AuthPage() {
     }
     if (signup) {
       handleSignUp(formData);
+      setMessages(
+        "inscription réussie consultez votre boite mail pour activer votre compte"
+      );
       setError(null);
     } else {
       handleSignIn(formData);
+
       setError(null);
     }
   };
@@ -91,8 +98,16 @@ export default function AuthPage() {
         priority={true}
         alt="Logo de Laure Sautier c'est des mains qui entoure le buste d'une personne représente la proffession de Ostéopathe"
       />
-      <h2 className="text-2xl">{!signup ? "Connexion" : "Inscription"}</h2>
       <form action={handleSubmit} className="w-full md:w2/3 lg:w-1/3 p-4">
+        {messages.length > 0 && (
+          <Alert className="bg-green-200 ">
+            <RocketIcon className="h-4 w-4" />
+            <AlertDescription>{messages}</AlertDescription>
+          </Alert>
+        )}
+        <h2 className="text-2xl text-center my-4">
+          {!signup ? "Connexion" : "Inscription"}
+        </h2>
         <fieldset
           className="grid drif-cols-1 w-full gap-4"
           disabled={isPending}
@@ -180,6 +195,9 @@ export default function AuthPage() {
       <Link
         href={signup ? "/auth?query=signin" : "/auth?query=signup"}
         className="mt-6 hover:underline"
+        onClick={() => {
+          setMessages("");
+        }}
       >
         {!signup ? "Pas encore de compte ?" : "Déjà un compte ?"}
       </Link>
