@@ -68,7 +68,9 @@ const Reservations: React.FC<ReservationsProps> = ({
 
   return (
     <div>
-      <h2 className="text-2xl font-bold">Mes réservations</h2>
+      {reservations[0] && (
+        <h2 className="text-2xl font-bold">Mes réservations</h2>
+      )}
       <ul>
         {reservations
           .map((reservation) => {
