@@ -37,7 +37,12 @@ export default function AuthPage() {
 
   const handleSignUp = (formData: FormData) => {
     startTransition(() => {
-      signUpWithPassword(formData).catch(() => {
+      signUpWithPassword(formData).then(() => {
+        setMessages(
+          "inscription réussie consultez votre boite mail pour activer votre compte"
+        );
+      })
+      .catch(() => {
         setError("Une erreur est survenue, veuillez réessayer");
       });
     });
@@ -76,13 +81,9 @@ export default function AuthPage() {
     }
     if (signup) {
       handleSignUp(formData);
-      setMessages(
-        "inscription réussie consultez votre boite mail pour activer votre compte"
-      );
       setError(null);
     } else {
       handleSignIn(formData);
-
       setError(null);
     }
   };
