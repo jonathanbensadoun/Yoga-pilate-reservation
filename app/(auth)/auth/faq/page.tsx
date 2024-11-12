@@ -41,19 +41,6 @@ const FAQPage: React.FC = () => {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Question 3
-        <AccordionItem value="item-3">
-          <AccordionTrigger>
-            Quels modes de paiement sont acceptés ?
-          </AccordionTrigger>
-          <AccordionContent>
-            Nous acceptons les paiements par carte de crédit ainsi que les
-            paiements sécurisés via des plateformes telles que PayPal. Toutes
-            les transactions sont sécurisées et cryptées pour garantir votre
-            sécurité.
-          </AccordionContent>
-        </AccordionItem> */}
-
         {/* Question 4 */}
         <AccordionItem value="item-4">
           <AccordionTrigger>
