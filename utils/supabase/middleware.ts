@@ -42,6 +42,12 @@ export async function updateSession(request: NextRequest) {
     url.pathname = '/auth'
     return NextResponse.redirect(url)
   }
+  if(user && request.nextUrl.pathname.startsWith('/auth')) {
+    // user is logged in, redirect to home page
+    const url = request.nextUrl.clone()
+    url.pathname = '/dashboard'
+    return NextResponse.redirect
+  }
   // 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
   // creating a new response object with NextResponse.next() make sure to:
