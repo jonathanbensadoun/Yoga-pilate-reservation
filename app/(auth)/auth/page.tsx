@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signInWithPassword, signUpWithPassword } from "@/utils/auth/action";
@@ -23,9 +23,15 @@ export default function AuthPage() {
   const [passwordConfirmationVisibility, setPasswordConfirmationVisibility] =
     useState(false);
   const [messages, setMessages] = useState("");
-  const query = useSearchParams().get("query");
+  const [signup, setSignup] = useState(false);
+  const searchParams = useSearchParams();
 
-  const signup = query === "signup";
+  // const query = searchParams.get("query");
+
+  useEffect(() => {
+    setSignup(searchParams.get("query") === "signup");
+  }, [searchParams]);
+  // const signup = query === "signup";
 
   const handleSignIn = (formData: FormData) => {
     startTransition(() => {
@@ -37,14 +43,15 @@ export default function AuthPage() {
 
   const handleSignUp = (formData: FormData) => {
     startTransition(() => {
-      signUpWithPassword(formData).then(() => {
-        setMessages(
-          "inscription réussie consultez votre boite mail pour activer votre compte"
-        );
-      })
-      .catch(() => {
-        setError("Une erreur est survenue, veuillez réessayer");
-      });
+      signUpWithPassword(formData)
+        .then(() => {
+          setMessages(
+            "inscription réussie consultez votre boite mail pour activer votre compte"
+          );
+        })
+        .catch(() => {
+          setError("Une erreur est survenue, veuillez réessayer");
+        });
     });
   };
 
@@ -113,8 +120,10 @@ export default function AuthPage() {
           className="grid drif-cols-1 w-full gap-4"
           disabled={isPending}
         >
+          <label htmlFor="email">Email</label>
           <Input type="email" name="email" placeholder="Email" required />
           <div className="relative">
+            <label htmlFor="password">Mot de passe</label>
             <Input
               type={passwordVisibility ? "text" : "password"}
               name="password"
@@ -135,6 +144,9 @@ export default function AuthPage() {
           </div>
           {signup && (
             <div className="relative">
+              <label htmlFor="confirm_password">
+                Confirmez le mot de passe
+              </label>
               <Input
                 type={passwordConfirmationVisibility ? "text" : "password"}
                 name="confirm_password"
@@ -164,18 +176,21 @@ export default function AuthPage() {
           )}
           {signup && (
             <>
+              <label htmlFor="first_name">Prénom</label>
               <Input
                 type="first_name"
                 name="first_name"
                 placeholder="Prénom"
                 required
               />
+              <label htmlFor="last_name">Nom</label>
               <Input
                 type="last_name"
                 name="last_name"
                 placeholder="Nom"
                 required
               />
+              <label htmlFor="phone">Téléphone</label>
               <Input
                 type="phone"
                 name="phone"
