@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+NEXT_PUBLIC_SUPABASE_URL=https://epmyfwdbpduyubkeqvkf.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwbXlmd2RicGR1eXVia2VxdmtmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc3MTAxODYsImV4cCI6MjA0MzI4NjE4Nn0.Rp7l48j2kQGIwYVyIx3fUiqmLe5e9PwPo1lChBmDTcw
+
+NEXT_PUBLIC_NAME_URL=https://laurecoachpilates.netlify.app/
+NEXT_PUBLIC_RESEND_API_KEY=re_aCkBDj4F_43rU1WSzAeod6cTcmesYwPKi
