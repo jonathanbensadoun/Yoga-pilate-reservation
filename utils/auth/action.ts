@@ -44,7 +44,7 @@ export const signUpWithPassword = async (data: FormData) => {
 export const getReservations = async () => {   
     const supabase = createClientServer();
     const { data, error } = await supabase.from("reservations").select("*");
-    
+    // console.log("getReservations",data)
     if (error) {
         console.error("Error fetching reservations:", error);
         return [];
@@ -65,7 +65,7 @@ export const getClasses = async (selectedDateForFetch: Date) => {
         .gte("class_date", startOfDay)
         .lte("class_date", endOfDay)
         .order("class_date", { ascending: true });
-
+    console.log("getClasses",data)
     if (error) {
         console.error("Error fetching classes:", error);
         return [];
@@ -75,6 +75,7 @@ export const getClasses = async (selectedDateForFetch: Date) => {
 export const getAllClasses = async () => {
     const supabase = createClientServer();
     const { data, error } = await supabase.from("classes").select("*").order("class_date", { ascending: true });
+    // console.log("getallclasse",data)
 
     if (error) {
         console.error("Error fetching classes:", error);
@@ -91,7 +92,7 @@ export const getClassesDate = async () => {
         .gte("class_date", new Date().toISOString())
         // .gt("available_slots", 0) 
         .order("class_date", { ascending: true });
-        
+        // console.log("getClassesDate",data)
     if (error) {
         console.error("Error fetching classes:", error);
         return [];

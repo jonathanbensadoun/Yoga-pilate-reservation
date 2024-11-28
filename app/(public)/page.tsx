@@ -84,10 +84,10 @@ export default function Home() {
     setLoad(true);
     const timer = setTimeout(() => {
       setLoad(false);
-    }, 20000);
+    }, 500);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [reload]);
 
   async function fetchData() {
     const dataReservations = await getReservations();
@@ -164,11 +164,7 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [successAddClass, errorAddClass]);
 
-  return load ? (
-    <main className="flex min-h-screen flex-col  item-center p-24 text-center ">
-      <p>Loading...</p>
-    </main>
-  ) : (
+  return (
     <main className="flex min-h-screen flex-col  item-center p-24 text-center ">
       <CalendarReservation
         classesDate={classesDate}
@@ -192,92 +188,103 @@ export default function Home() {
           <AlertDescription>{messageAlert}</AlertDescription>
         </Alert>
       )}
-      <h2 className="text-2xl font-bold mt-4">
-        Séance(s) du{" "}
-        {selectedDateForFetch.toLocaleDateString("fr-FR", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-      </h2>
-      {classes.length > 0 ? (
-        <ul className="flex flex-col justify-center items-center my-4 ">
-          {classes.map((classe) => (
-            <li
-              key={classe.id}
-              className="border rounded-md p-2 my-2 flex flex-col justify-center items-center gap-4  md:2/3 lg:w-1/3 shadow"
-            >
-              <CardClasses
-                classe={classe}
-                handleReservation={handleReservation}
-                profil={profil!}
-              />
-              {profil && profil.admin && classe.available_slots !== 0 && (
-                <AddPatientToClass
-                  allProfiles={allProfiles}
-                  classId={classe.id}
-                  handleReservation={handleReservation}
-                />
-              )}
+      {load ? (
+        <div className="flex flex-col  item-center p-24 text-center ">
+          <p>Loading...</p>
+        </div>
+      ) : (
+        <>
+          <h2 className="text-2xl font-bold mt-4">
+            Séance(s) du{" "}
+            {selectedDateForFetch.toLocaleDateString("fr-FR", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </h2>
+          {classes.length > 0 ? (
+            <ul className="flex flex-col justify-center items-center my-4 ">
+              {classes.map((classe) => (
+                <li
+                  key={classe.id}
+                  className="border rounded-md p-2 my-2 flex flex-col justify-center items-center gap-4  md:2/3 lg:w-1/3 shadow"
+                >
+                  <CardClasses
+                    classe={classe}
+                    handleReservation={handleReservation}
+                    profil={profil!}
+                  />
+                  {profil && profil.admin && classe.available_slots !== 0 && (
+                    <AddPatientToClass
+                      allProfiles={allProfiles}
+                      classId={classe.id}
+                      handleReservation={handleReservation}
+                    />
+                  )}
 
-              {profil && profil.admin && (
-                <ListStudent
-                  classesId={classe.id}
+                  {profil && profil.admin && (
+                    <ListStudent
+                      classesId={classe.id}
+                      reservations={reservations}
+                      classes={classes}
+                      allProfiles={allProfiles}
+                      startTransition={startTransition}
+                      setMessageAlert={setMessageAlert}
+                      setSuccessAddClass={setSuccessAddClass}
+                      setErrorAddClass={setErrorAddClass}
+                      setReload={setReload}
+                    />
+                  )}
+                  {profil && profil.admin && (
+                    <DeleteClasses
+                      handleDelete={handleDelete}
+                      classe={classe}
+                    />
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="my-2 text-xl">Pas de cours</p>
+          )}
+          <div className="flex flex-col justify-center items-center gap-4">
+            {!addClass && profil && profil.admin && (
+              <MdAddCircle
+                onClick={() => setAddClass(true)}
+                className="w-12 h-12 hover:text-blue-200 hover:h-14 hover:w-14 cursor-pointer"
+              />
+            )}
+            {addClass && profil && profil.admin && (
+              <FormAddClasses
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                setAddClass={setAddClass}
+                startTransition={startTransition}
+                setSuccessAddClass={setSuccessAddClass}
+                setErrorAddClass={setErrorAddClass}
+                setReload={setReload}
+                setMessageAlert={setMessageAlert}
+                isPending={isPending}
+              />
+            )}
+
+            {profil && !profil.admin && (
+              <div className="lg:w-1/3">
+                <Reservations
                   reservations={reservations}
-                  classes={classes}
-                  allProfiles={allProfiles}
+                  classes={allClasses}
                   startTransition={startTransition}
                   setMessageAlert={setMessageAlert}
                   setSuccessAddClass={setSuccessAddClass}
                   setErrorAddClass={setErrorAddClass}
                   setReload={setReload}
                 />
-              )}
-              {profil && profil.admin && (
-                <DeleteClasses handleDelete={handleDelete} classe={classe} />
-              )}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="my-2 text-xl">Pas de cours</p>
-      )}
-      <div className="flex flex-col justify-center items-center gap-4">
-        {!addClass && profil && profil.admin && (
-          <MdAddCircle
-            onClick={() => setAddClass(true)}
-            className="w-12 h-12 hover:text-blue-200 hover:h-14 hover:w-14 cursor-pointer"
-          />
-        )}
-        {addClass && profil && profil.admin && (
-          <FormAddClasses
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-            setAddClass={setAddClass}
-            startTransition={startTransition}
-            setSuccessAddClass={setSuccessAddClass}
-            setErrorAddClass={setErrorAddClass}
-            setReload={setReload}
-            setMessageAlert={setMessageAlert}
-            isPending={isPending}
-          />
-        )}
-
-        {profil && !profil.admin && (
-          <div className="lg:w-1/3">
-            <Reservations
-              reservations={reservations}
-              classes={allClasses}
-              startTransition={startTransition}
-              setMessageAlert={setMessageAlert}
-              setSuccessAddClass={setSuccessAddClass}
-              setErrorAddClass={setErrorAddClass}
-              setReload={setReload}
-            />
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </main>
   );
 }
