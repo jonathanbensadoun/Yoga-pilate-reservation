@@ -100,8 +100,8 @@ export default function AuthPage() {
       <Image
         className="rounded-full mb-8 w-2/3 md:w-1/3 xl:w-1/4 h-auto"
         src="/img/Logo_Laure_S.jpg"
-        width={100}
-        height={300}
+        width={1798}
+        height={2454}
         placeholder="empty"
         priority
         alt="Logo de Laure Sautier c'est des mains qui entoure le buste d'une personne représente la proffession de Ostéopathe"
