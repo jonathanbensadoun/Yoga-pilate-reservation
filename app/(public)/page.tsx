@@ -79,6 +79,7 @@ export default function Home() {
   );
   const [allClasses, setAllClasses] = useState<Classe[]>([]);
   const [allProfiles, setAllProfiles] = useState<AllProfile[]>([]);
+
   async function fetchData() {
     const dataReservations = await getReservations();
     const dataProfile = await getProfile();
@@ -187,7 +188,7 @@ export default function Home() {
           day: "numeric",
         })}
       </h2>
-      {classes.length >= 1 ? (
+      {classes.length > 0 ? (
         <ul className="flex flex-col justify-center items-center my-4 ">
           {classes.map((classe) => (
             <li
