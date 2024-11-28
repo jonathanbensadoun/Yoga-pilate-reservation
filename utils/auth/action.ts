@@ -58,7 +58,7 @@ export const getClasses = async (selectedDateForFetch: Date) => {
     const supabase = createClientServer();   
      // Retirer un jour de la date sélectionnée
      const adjustedDate = new Date(selectedDateForFetch);
-     adjustedDate.setDate(adjustedDate.getDate() - 1);
+     adjustedDate.setDate(adjustedDate.getDate() + 1);
  
      // Calculer le début et la fin de la journée ajustée
      const startOfDay = new Date(adjustedDate.setHours(0, 0, 0, 0)).toISOString();
