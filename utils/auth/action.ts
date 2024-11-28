@@ -55,10 +55,26 @@ export const getReservations = async () => {
 }
 
 export const getClasses = async (selectedDateForFetch: Date) => {
-    const supabase = createClientServer();   
-    const startOfDay = new Date(selectedDateForFetch.setHours(0, 0, 0, 0)).toISOString();
-    const endOfDay = new Date(selectedDateForFetch.setHours(23, 59, 59, 999)).toISOString();
-
+    const supabase = createClientServer(); 
+    const startOfDay = new Date(
+        Date.UTC(
+          selectedDateForFetch.getUTCFullYear(),
+          selectedDateForFetch.getUTCMonth(),
+          selectedDateForFetch.getUTCDate(),
+          0, 0, 0, 0
+        )
+      ).toISOString();
+      
+      const endOfDay = new Date(
+        Date.UTC(
+          selectedDateForFetch.getUTCFullYear(),
+          selectedDateForFetch.getUTCMonth(),
+          selectedDateForFetch.getUTCDate(),
+          23, 59, 59, 999
+        )
+      ).toISOString();
+    console.log("startOfDay",startOfDay)    
+    console.log("endOfDay",endOfDay)
     const { data, error } = await supabase
         .from("classes")
         .select("*")
