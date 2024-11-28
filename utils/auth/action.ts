@@ -73,15 +73,15 @@ export const getClasses = async (selectedDateForFetch: Date) => {
           23, 59, 59, 999
         )
       ).toISOString();
-    console.log("startOfDay",startOfDay)    
-    console.log("endOfDay",endOfDay)
+    // console.log("startOfDay",startOfDay)    
+    // console.log("endOfDay",endOfDay)
     const { data, error } = await supabase
         .from("classes")
         .select("*")
-        .gte("class_date", startOfDay)
-        .lte("class_date", endOfDay)
+        // .gte("class_date", startOfDay)
+        // .lte("class_date", endOfDay)
         .order("class_date", { ascending: true });
-    console.log("getClasses",data)
+    // console.log("getClasses",data)
     if (error) {
         console.error("Error fetching classes:", error);
         return [];
