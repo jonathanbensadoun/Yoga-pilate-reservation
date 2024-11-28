@@ -23,7 +23,6 @@ import CardClasses from "@/components/CardClasses";
 import CalendarReservation from "@/components/CalendarReservation";
 import ListStudent from "@/components/ListStudent";
 import AddPatientToClass from "@/components/AddPatientToClass";
-
 interface Reservation {
   classes_id: string | null;
   created_at: string;
@@ -79,6 +78,16 @@ export default function Home() {
   );
   const [allClasses, setAllClasses] = useState<Classe[]>([]);
   const [allProfiles, setAllProfiles] = useState<AllProfile[]>([]);
+  const [load, setLoad] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoad(true);
+    const timer = setTimeout(() => {
+      setLoad(false);
+    }, 20000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   async function fetchData() {
     const dataReservations = await getReservations();
@@ -155,7 +164,11 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [successAddClass, errorAddClass]);
 
-  return (
+  return load ? (
+    <main className="flex min-h-screen flex-col  item-center p-24 text-center ">
+      <p>Loading...</p>
+    </main>
+  ) : (
     <main className="flex min-h-screen flex-col  item-center p-24 text-center ">
       <CalendarReservation
         classesDate={classesDate}
