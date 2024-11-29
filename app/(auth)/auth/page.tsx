@@ -122,8 +122,8 @@ export default function AuthPage() {
         >
           <label htmlFor="email">Email</label>
           <Input type="email" name="email" placeholder="Email" required />
+          <label htmlFor="password">Mot de passe</label>
           <div className="relative">
-            <label htmlFor="password">Mot de passe</label>
             <Input
               type={passwordVisibility ? "text" : "password"}
               name="password"
@@ -144,9 +144,6 @@ export default function AuthPage() {
           </div>
           {signup && (
             <div className="relative">
-              <label htmlFor="confirm_password">
-                Confirmez le mot de passe
-              </label>
               <Input
                 type={passwordConfirmationVisibility ? "text" : "password"}
                 name="confirm_password"
